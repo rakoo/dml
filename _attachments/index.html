@@ -5,12 +5,9 @@
     <link rel="stylesheet" href="style/main.css" type="text/css">
   </head>
   <body>
-    <div id="account"></div>
 
     <h1>Distributed Magnet Links</h1>
 
-    <div id="profile">
-    </div>
     <div id="content"></div>
 
     <div id="sidebar">
@@ -30,30 +27,18 @@
 
 <!-- templates used by app.js -->
   <script id="new-message" type="text/x-mustache" charset="utf-8">
-      <div class="avatar">
-        {{#gravatar_url}}<img src="{{gravatar_url}}"/>{{/gravatar_url}}
-        <div class="name">
-          {{name}}
-        </div>
-      </div>
-      <form id="create-message">
-        <label>New message from {{nickname}}: <input type="text" name="message" size=60 value=""></label>
+	  <form id="create-message">
+		  <!--<label>New message from {{nickname}}: <input type="text" name="message" size=60 value=""></label>-->
       </form>
       <div style="clear:left;"></div>
   </script>
 
-  <script id="recent-messages" type="text/x-mustache" charset="utf-8">
-        <h3>Recent Messages</h3>
+  <script id="recent-magnet-links" type="text/x-mustache" charset="utf-8">
+        <h3>Recent magnet links</h3>
         <ul id="items">
           {{#items}}
             <li>
-              <div class="avatar">
-                {{#gravatar_url}}<img src="{{gravatar_url}}" alt="{{name}}"/>{{/gravatar_url}}
-                <div class="name">
-                  {{nickname}}
-                </div>
-              </div>
-              <p>{{message}}</p>
+              <p>{{name}}</p>
               <div style="clear:left;"></div>
             </li>
           {{/items}}
