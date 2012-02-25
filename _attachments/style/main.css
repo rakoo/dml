@@ -12,12 +12,27 @@ h1 {
   float:right;
 }
 
-#profile {
+#search-container {
   border:4px solid #edd;
   background:#fee;
   padding:8px;
   margin-bottom:8px;
 }
+
+input {
+	width: 100%;
+}
+
+#num-of-results {
+	text-align:right;
+}
+
+#size-field {
+	text-align:right;
+	font-style:italic;
+}
+
+
 
 #content {
   border:4px solid #dde;

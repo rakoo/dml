@@ -8,6 +8,16 @@
 
     <h1>Distributed Magnet Links</h1>
 
+	<div id="search-container">
+		<h2>Search</h2>
+		<label for="query">Type Something:</label>
+		<input type="text" id="query" name="query"/>
+		<button id="search-button">
+		  Search !
+		</button>
+
+	</div>
+
     <div id="content"></div>
 
     <div id="sidebar">
@@ -15,37 +25,42 @@
       <p>Ideas: You could easily turn this into a photo sharing app, 
           or a grocery list, or a chat room. <a href="https://github.com/couchapp/example">Code for this app is on Github.</a></p>
     </div>
+
   </body>
-  <script src="/_utils/script/sha1.js"></script>
-  <script src="/_utils/script/json2.js"></script>
   <script src="/_utils/script/jquery.js"></script>
   <script src="/_utils/script/jquery.couch.js"></script>
-  <script src="vendor/couchapp/jquery.couchLogin.js"></script>
-  <script src="vendor/couchapp/jquery.couchProfile.js"></script>
-  <script src="vendor/couchapp/md5.js"></script>
   <script src="vendor/couchapp/jquery.mustache.js"></script>
 
 <!-- templates used by app.js -->
-  <script id="new-message" type="text/x-mustache" charset="utf-8">
-	  <form id="create-message">
-		  <!--<label>New message from {{nickname}}: <input type="text" name="message" size=60 value=""></label>-->
-      </form>
-      <div style="clear:left;"></div>
-  </script>
 
   <script id="recent-magnet-links" type="text/x-mustache" charset="utf-8">
-        <h3>Recent magnet links</h3>
-        <ul id="items">
-          {{#items}}
-            <li>
-              <p>{{name}}</p>
-              <div style="clear:left;"></div>
-            </li>
-          {{/items}}
-        </ul>
-        <p><em>Protip:</em> If you setup continuous replication between this database and a remote one, this list will reflect remote changes in near real-time.</p>
-        <p>This would be a good place to add pagination.</p>
+		<h3>Recent magnet links</h3>
+		<ul id="items">
+			{{#items}}
+				<li>
+					<p>{{name}}</p>
+				</li>
+			{{/items}}
+		</ul>
+		<p><em>Protip:</em> If you setup continuous replication between this database and a remote one, this list will reflect remote changes in near real-time.</p>
+		<p>This would be a good place to add pagination.</p>
   </script>
-  <script src="script/app.js"></script>
 
+  <script id="search-result" type="text/x-mustache" charset="utf-8">
+		<h2> Results ({{num}} results)</h2>
+		<div>
+			<ul id="items">
+				{{#items}}
+					<li>
+						<h3>{{name}} ({{size}})</h3>
+			<p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
+			<p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
+					</li>
+				{{/items}}
+			</ul>
+		</div>
+  </script>
+
+  <script src="script/app.js"></script>
+  	
 </html>
