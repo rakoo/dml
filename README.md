@@ -1,33 +1,31 @@
-## Generated CouchApp
+# Distributed Magnet Links
 
-This is meant to be an example CouchApp and to ship with most of the CouchApp goodies.
+This database aims to be a distributed magnet links place where everyone
+can add its own MLs, search and share them with other, with the least
+difficulty.
 
-Clone with git:
+Work has been started after the release of a somewhat famous torrent :
+the whole TPB magnet links archive
 
-    git clone git://github.com/couchapp/example.git
-    cd example
+The database holds both the data AND the logic/view, so that anyone
+willing to use it will only have to clone/sync one thing.
 
-Install with 
-    
-    couchapp push . http://localhost:5984/example
+## View
 
-or (if you have security turned on)
+As the whole thing has to be included in couchdb, the only view used
+(search_index) is really dumb : it indexes every name in the data,
+	splits the words, and adds each of them as an entry in the index.
 
-    couchapp push . http://adminname:adminpass@localhost:5984/example
-  
-You can also create this app by running
+This has several disadvantages :
+* very big database
+* cannot search with subwords
+* custom parsing/splitting method which doesn't manage special cases
+	(CamelCase, ...)
+* has to use a workaround to search with case ignored (search from
+	keyword in lowercase to keyword in uppercase)
 
-    couchapp generate example && cd example
-    couchapp push . http://localhost:5984/example
+This is the cost of being self-included.
 
-Deprecated: *couchapp generate proto && cd proto*
-
-
-## Todo
-
-* factor CouchApp Commonjs to jquery.couch.require.js
-* use $.couch.app in app.js
-
-## License
-
-Apache 2.0
+## TODO
+* add a magnet link adding option
+* improve the indexing design

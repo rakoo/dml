@@ -24,7 +24,6 @@ $(document).ready(function() {
 			endkey : $("#query").val().toUpperCase(),
 			include_docs : true,
 			success : function(data) {
-				console.log("here");
 				var them = $.mustache($("#search-result").html(), {
 					num : data.rows.length,
 					items : data.rows.map(function(r) {
