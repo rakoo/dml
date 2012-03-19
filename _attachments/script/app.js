@@ -41,25 +41,54 @@ $(document).ready(function() {
 
   // display ids
   function display(ids){
-    console.log(ids.length);
     var them = $.mustache($("#result-header-mustache").html(), {
       num: ids.length
     });
     $("#result-header").html(them);
 
-    // paginate
-    var next_startkey, p_startkey, p_endkey;
-    var paginated_keys;
-    $("#result-footer").html($("#result-footer-mustache").html());
-    if (ids.length > 10){
-      paginated_keys = ids.slice(0, 10);
+    display_paginated(1,ids) // when pagination is called, everything is set up in place
 
-      // evently to the rescue
+  }
 
-    }
+  // setup and display paginated keys for a page
+  function display_paginated(page, from_ids){
+      var prev_exists = true, next_exists = true;
+      var last_page = Math.ceil(from_ids.length / 10);
 
+      if (page === 1){prev_exists = false}
+      if (page === last_page){next_exists = false}
+
+      var last_id;
+      if (page === last_page){
+        last_id = from_ids.length
+      }else{
+        last_id = page * 10
+      }
+      paginated_keys = from_ids.slice( (page - 1) * 10, last_id);
+      console.log(next_exists, prev_exists);
+
+      $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
+        next: (function(){return next_exists == true}),
+        prev: (function(){return prev_exists == true})
+      }));
+
+
+      if (next_exists){
+        $("a[href=#next]").click(function(){display_paginated(page + 1, from_ids)});
+      }
+      if (prev_exists){
+        $("a[href=#prev]").click(function(){display_paginated(page - 1, from_ids)});
+      }
+
+      fetch_and_display(paginated_keys);
+  }
+
+
+
+  // really fetch docs and display them
+  function fetch_and_display(ids){
     db.allDocs({
-      keys: paginated_keys,
+      keys: ids,
       include_docs: true,
       success: function(data){
         var them = $.mustache($("#result-body-mustache").html(), {
@@ -75,8 +104,8 @@ $(document).ready(function() {
         $("#result-body").html(them);
       }
     });
-
   }
+
 
 	$("#search-button").click(search);
 	$("#query").keyup(function(event){

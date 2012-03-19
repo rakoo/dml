@@ -42,6 +42,14 @@ input {
   float:left;
 }
 
+a[href="#prev"] {
+ float:left;
+}
+
+a[href="#next"] {
+  float:right;
+}
+
 #sidebar {
   border:4px solid #dfd;
   padding:8px;
