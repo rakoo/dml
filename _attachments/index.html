@@ -18,7 +18,11 @@
 
 	</div>
 
-    <div id="content"></div>
+  <div id="result">
+    <div id="result-header"></div>
+    <div id="result-body"></div>
+    <div id="result-footer"></div>
+  </div>
 
     <div id="sidebar">
       <p>Edit welcome message.</p>
@@ -33,32 +37,25 @@
 
 <!-- templates used by app.js -->
 
-  <script id="recent-magnet-links" type="text/x-mustache" charset="utf-8">
-		<h3>Recent magnet links</h3>
-		<ul id="items">
-			{{#items}}
-				<li>
-					<p>{{name}}</p>
-				</li>
-			{{/items}}
-		</ul>
-		<p><em>Protip:</em> If you setup continuous replication between this database and a remote one, this list will reflect remote changes in near real-time.</p>
-		<p>This would be a good place to add pagination.</p>
+  <script id="result-header-mustache" type="text/x-mustache" charset="utf-8">
+    <h2> Results ({{num}} results)</h2>
   </script>
 
-  <script id="search-result" type="text/x-mustache" charset="utf-8">
-		<h2> Results ({{num}} results)</h2>
-		<div>
+  <script id="result-body-mustache" type="text/x-mustache" charset="utf-8">
 			<ul id="items">
 				{{#items}}
 					<li>
 						<h3>{{name}} ({{size}})</h3>
-			<p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
-			<p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
+            <p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
+            <p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
 					</li>
 				{{/items}}
 			</ul>
-		</div>
+  </script>
+
+  <script id="result-footer-mustache" type="text/x-mustache" charset="utf-8">
+    {{#prev}}<a href="#prev">prev</a>{{/prev}}
+    {{#next}}<a href="#next">next</a>{{/next}}
   </script>
 
   <script src="script/app.js"></script>

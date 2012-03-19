@@ -1,5 +1,6 @@
 // Apache 2.0 J Chris Anderson 2011
 $(document).ready(function() {   
+  $("#query").val('');
 	// The db
 	var path = unescape(document.location.pathname).split('/'),
 		design = path[3],
@@ -18,32 +19,71 @@ $(document).ready(function() {
 	}
 
 	//search
-	function search() {
+  function search() {
+  if ($("#query").val() == ""){return;}
+    var terms = $("#query").val().split(' '); // simple for the moment
+    fetch_from_db(terms);
+  }
+
+  // fetch ids from the dm
+	function fetch_from_db(terms) {
 		db.view(design + "/search_index", {
-			startkey : $("#query").val().toLowerCase(),
-			endkey : $("#query").val().toUpperCase(),
-			include_docs : true,
+      keys: terms,
+      reduce: false,
 			success : function(data) {
-				var them = $.mustache($("#search-result").html(), {
-					num : data.rows.length,
-					items : data.rows.map(function(r) {
-						return {
-							"size" : bytesToSize(r.doc.size),
-							"name" : r.value,
-							"id" : r.doc.id,
-							"hash" : r.doc.hash
-						};
-					})
-				});
-				$("#content").html(them);
+        var ids = data.rows.map(function(row){
+          return row.id;
+        });
+        display(ids);
 			}
 		});
 	};
-	$("#search-button").click(search());
+
+  // display ids
+  function display(ids){
+    console.log(ids.length);
+    var them = $.mustache($("#result-header-mustache").html(), {
+      num: ids.length
+    });
+    $("#result-header").html(them);
+
+    // paginate
+    var next_startkey, p_startkey, p_endkey;
+    var paginated_keys;
+    $("#result-footer").html($("#result-footer-mustache").html());
+    if (ids.length > 10){
+      paginated_keys = ids.slice(0, 10);
+
+      // evently to the rescue
+
+    }
+
+    db.allDocs({
+      keys: paginated_keys,
+      include_docs: true,
+      success: function(data){
+        var them = $.mustache($("#result-body-mustache").html(), {
+          items : data.rows.map(function(r) {
+            return {
+              "size" : bytesToSize(r.doc.size),
+              "name" : r.doc.name,
+              "id" : r.doc.id,
+              "hash" : r.doc.hash
+            };
+          })
+        });
+        $("#result-body").html(them);
+      }
+    });
+
+  }
+
+	$("#search-button").click(search);
 	$("#query").keyup(function(event){
 		if (event.which == 13) {
 			search();
 		}  
 	});
+
 	
 });
