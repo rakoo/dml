@@ -17,15 +17,11 @@ As the whole thing has to be included in couchdb, the only view used
 	splits the words, and adds each of them as an entry in the index.
 
 This has several disadvantages :
-* very big database
-* cannot search with subwords
+* cannot search for only some parts of a word
 * custom parsing/splitting method which doesn't manage special cases
-	(CamelCase, ...)
-* has to use a workaround to search with case ignored (search from
-	keyword in lowercase to keyword in uppercase)
-
-This is the cost of being self-included.
 
 ## TODO
-* add a magnet link adding option
-* improve the indexing design
+* add a magnet link adding/editing option
+* real REST ! (maybe through something like sammy.js ?)
+* proper security
+* use _changes goodness
