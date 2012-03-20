@@ -42,7 +42,7 @@
       {{#items}}
       <li>
       <h3>{{{name}}} ({{size}})</h3>
-      <p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
+      <p>TPB page : <a href={{{tpb_url}}}>{{tpb_url}}</a></p>
       <p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
       </li>
       {{/items}}

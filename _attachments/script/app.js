@@ -147,7 +147,7 @@ $(document).ready(function() {
             return {
               "size" : bytesToSize(r.doc.size),
               "name" : highlighted_name,
-              "id" : r.doc.id,
+              "tpb_url" : r.doc.tpb_url,
               "hash" : r.doc.hash
             };
           })
