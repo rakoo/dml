@@ -46,17 +46,18 @@ $(document).ready(function() {
       group: true,
       success : function(data) {
 
+        var total_num = data.rows.reduce(function(accu,current){
+          return accu + current.value;
+        },0)
         // display the number of ids
         var them = $.mustache($("#result-header-mustache").html(), {
-          num: data.rows.reduce(function(accu,current){
-            return accu + current.value;
-          },0)
+          num: total_num
         });
         $("#result-header").html(them);
 
         // pagination will start at the beginning of the results
         var page_index = new Array;
-        display_page(1, page_index, Math.floor(data.rows.length/10),terms);
+        display_page(1, page_index, Math.floor(total_num/10),terms);
       }
     });
   };
