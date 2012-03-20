@@ -17,8 +17,10 @@ As the whole thing has to be included in couchdb, the only view used
 	splits the words, and adds each of them as an entry in the index.
 
 This has several disadvantages :
+
 * cannot search for only some parts of a word
 * custom parsing/splitting method which doesn't manage special cases
+
 
 ## TODO
 * add a magnet link adding/editing option
