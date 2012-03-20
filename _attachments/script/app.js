@@ -87,13 +87,13 @@ $(document).ready(function() {
 
         if (data.rows.length < 11){ // last page
           next_exists = false;
-        }else{
+        }else if(page_index.indexOf(data.rows[10].id) == -1){ // didn't click on "prev"
           page_index.push(data.rows[10].id); // careful ! 11th element is at 10
         }
+        var prev_exists = page != 1;
+    console.log(page_index.slice(1));
 
-        var prev_exists = (function(){return page != 1});
-
-        // display the prev/next
+        // display the prev/next footer
         $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
           next: (function(){return next_exists == true}),
           page: page,
@@ -134,7 +134,7 @@ $(document).ready(function() {
         var them = $.mustache($("#result-body-mustache").html(), {
           items : data.rows.map(function(r) {
 
-            // replace the name with one that contains highlight divs
+            // highlight the name
             var highlighted_name = terms.reduce(function(accu,cur){
               var re = new RegExp(cur,'ig');
               return accu.replace(re , function(str){
