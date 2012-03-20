@@ -8,4 +8,7 @@ function(doc) {
       }
     });
   }
+  else{
+    emit(["malformed"],null);
+  }
 }
