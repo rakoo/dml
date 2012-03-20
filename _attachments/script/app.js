@@ -1,10 +1,21 @@
 // Apache 2.0 J Chris Anderson 2011
 $(document).ready(function() {   
   $("#query").val('');
+    
+
 	// The db
 	var path = unescape(document.location.pathname).split('/'),
 		design = path[3],
 		db = $.couch.db(path[1]);
+
+    db.info({
+      success: function(data){
+        $("#sidebar").html($.mustache($("#sidebar-mustache").html(),{
+          num: data.doc_count
+        }));
+      }
+    });
+
 
 	// display nice human readable size
 	function bytesToSize(bytes) {
@@ -29,6 +40,7 @@ $(document).ready(function() {
 	function fetch_from_db(terms) {
 		db.view(design + "/search_index", {
       keys: terms,
+      stale: "update_after",
       reduce: false,
 			success : function(data) {
         var ids = data.rows.map(function(row){
@@ -65,10 +77,11 @@ $(document).ready(function() {
         last_id = page * 10
       }
       paginated_keys = from_ids.slice( (page - 1) * 10, last_id);
-      console.log(next_exists, prev_exists);
 
       $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
         next: (function(){return next_exists == true}),
+        page: page,
+        num_page: last_page,
         prev: (function(){return prev_exists == true})
       }));
 

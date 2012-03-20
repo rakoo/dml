@@ -24,11 +24,7 @@
     <div id="result-footer"></div>
   </div>
 
-    <div id="sidebar">
-      <p>Edit welcome message.</p>
-      <p>Ideas: You could easily turn this into a photo sharing app, 
-          or a grocery list, or a chat room. <a href="https://github.com/couchapp/example">Code for this app is on Github.</a></p>
-    </div>
+  <div id="sidebar"></div>
 
   </body>
   <script src="/_utils/script/jquery.js"></script>
@@ -55,9 +51,14 @@
 
   <script id="result-footer-mustache" type="text/x-mustache" charset="utf-8">
     {{#prev}}<a href="#prev">prev</a>{{/prev}}
+    <div id="page_indicator">{{page}}/{{num_page}}</div>
     {{#next}}<a href="#next">next</a>{{/next}}
   </script>
 
+  <script id="sidebar-mustache" type="text/x-mustache" charset="utf-8">
+    <p>Your database currently holds {{num}} magnet links. Congrats !</p>
+  </script>
   <script src="script/app.js"></script>
   	
 </html>
+

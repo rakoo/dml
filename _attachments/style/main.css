@@ -20,7 +20,7 @@ h1 {
 }
 
 input {
-	width: 100%;
+	width:100%;
 }
 
 #num-of-results {
@@ -48,6 +48,12 @@ a[href="#prev"] {
 
 a[href="#next"] {
   float:right;
+}
+
+#page_indicator {
+  float:left;
+  position:relative;
+  left:50%;
 }
 
 #sidebar {
