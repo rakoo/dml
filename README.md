@@ -25,3 +25,4 @@ This has several disadvantages :
 * real REST ! (maybe through something like sammy.js ?)
 * proper security
 * use _changes goodness
+* implement a proper multiword search
