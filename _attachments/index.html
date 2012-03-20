@@ -8,45 +8,45 @@
 
     <h1>Distributed Magnet Links</h1>
 
-	<div id="search-container">
-		<h2>Search</h2>
-		<label for="query">Type Something:</label>
-		<input type="text" id="query" name="query"/>
-		<button id="search-button">
-		  Search !
-		</button>
+    <div id="search-container">
+      <h2>Search</h2>
+      <label for="query">Type Something:</label>
+      <input type="text" id="query" name="query"/>
+      <button id="search-button">
+        Search !
+      </button>
 
-	</div>
+    </div>
 
-  <div id="result">
-    <div id="result-header"></div>
-    <div id="result-body"></div>
-    <div id="result-footer"></div>
-  </div>
+    <div id="result">
+      <div id="result-header"></div>
+      <div id="result-body"></div>
+      <div id="result-footer"></div>
+    </div>
 
-  <div id="sidebar"></div>
+    <div id="sidebar"></div>
 
   </body>
   <script src="/_utils/script/jquery.js"></script>
   <script src="/_utils/script/jquery.couch.js"></script>
   <script src="vendor/couchapp/jquery.mustache.js"></script>
 
-<!-- templates used by app.js -->
+  <!-- templates used by app.js -->
 
   <script id="result-header-mustache" type="text/x-mustache" charset="utf-8">
     <h2> Results ({{num}} results)</h2>
   </script>
 
   <script id="result-body-mustache" type="text/x-mustache" charset="utf-8">
-			<ul id="items">
-				{{#items}}
-					<li>
-						<h3>{{name}} ({{size}})</h3>
-            <p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
-            <p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
-					</li>
-				{{/items}}
-			</ul>
+    <ul id="items">
+      {{#items}}
+      <li>
+      <h3>{{{name}}} ({{size}})</h3>
+      <p>TPB page : <a href="http://www.thepiratebay.se/torrent/{{id}}">http://www.thepiratebay.se/torrent/{{id}}</a></p>
+      <p>Magnet Link : <a href="magnet:?xt=urn:btih:{{hash}}">magnet:?xt=urn:btih:{{hash}}</a></p>
+      </li>
+      {{/items}}
+    </ul>
   </script>
 
   <script id="result-footer-mustache" type="text/x-mustache" charset="utf-8">
@@ -59,6 +59,6 @@
     <p>Your database currently holds {{num}} magnet links. Congrats !</p>
   </script>
   <script src="script/app.js"></script>
-  	
+
 </html>
 

@@ -126,16 +126,26 @@ $(document).ready(function() {
 
 
   // really fetch docs and display them
-  function fetch_and_display(ids){
+  function fetch_and_display(ids,terms){
     db.allDocs({
       keys: ids,
       include_docs: true,
       success: function(data){
         var them = $.mustache($("#result-body-mustache").html(), {
           items : data.rows.map(function(r) {
+
+            // replace the name with one that contains highlight divs
+            var highlighted_name = terms.reduce(function(accu,cur){
+              var re = new RegExp(cur,'ig');
+              return accu.replace(re , function(str){
+                return '<span id=\"highlight\">' + str + '</span>'
+              });
+            },r.doc.name);
+
+            // return the fill-in values
             return {
               "size" : bytesToSize(r.doc.size),
-              "name" : r.doc.name,
+              "name" : highlighted_name,
               "id" : r.doc.id,
               "hash" : r.doc.hash
             };

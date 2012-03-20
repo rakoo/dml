@@ -20,16 +20,16 @@ h1 {
 }
 
 input {
-	width:100%;
+  width:100%;
 }
 
 #num-of-results {
-	text-align:right;
+  text-align:right;
 }
 
 #size-field {
-	text-align:right;
-	font-style:italic;
+  text-align:right;
+  font-style:italic;
 }
 
 
@@ -42,8 +42,12 @@ input {
   float:left;
 }
 
+#highlight {
+  background:#f57900;
+}
+
 a[href="#prev"] {
- float:left;
+  float:left;
 }
 
 a[href="#next"] {
