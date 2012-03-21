@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   db.info({
     success: function(data){
-      $("#sidebar").html($.mustache($("#sidebar-mustache").html(),{
+      $("#sidebar-placeholder").html($.mustache($("#sidebar-mustache").html(),{
         num: data.doc_count
       }));
     }

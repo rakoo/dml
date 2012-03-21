@@ -24,7 +24,13 @@
       <div id="result-footer"></div>
     </div>
 
-    <div id="sidebar"></div>
+    <div id="sidebar">
+      <p>Searching for multiple words is just a OR at the moment.</p>
+      <div id="sidebar-placeholder"></div>
+      <p>This couchapp resides at <a
+        href="https://github.com/rakoo/dml">https://github.com/rakoo/dml</a>.
+      Share, hack, play with and redistribute the love ! </p>
+    </div>
 
   </body>
   <script src="/_utils/script/jquery.js"></script>
@@ -56,7 +62,6 @@
   </script>
 
   <script id="sidebar-mustache" type="text/x-mustache" charset="utf-8">
-    <p>Searching for multiple words is just a OR at the moment.</p>
     <p>Your database currently holds {{num}} magnet links. Congrats !</p>
   </script>
   <script src="script/app.js"></script>
