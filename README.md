@@ -19,6 +19,15 @@ Those features seemed pretty neat for a "distributed \<anything\>"
 project, so here you go : insert you magnet links, synchronize with
 everyone, search through the whole data at home !
 
+## Demo
+You can test a live demo at
+http://krakotztest.iriscouch.com/magnet_links_test/_design/dml/index.html
+
+
+It doesn't contain all the links at the moment, only a little (10000)
+subset to test.
+
+
 ## View
 
 As the whole thing has to be included in couchdb, the only view used
