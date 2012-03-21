@@ -8,7 +8,16 @@ Work has been started after the release of a somewhat famous torrent :
 the whole TPB magnet links archive
 
 The database holds both the data AND the logic/view, so that anyone
-willing to use it will only have to clone/sync one thing.
+willing to use it will only have to clone/sync one thing. It is based on
+couchdb (http://couchdb.apache.org/) which main features are : 
+
+* built-in replication over any number of nodes, with multi versions
+* RESTful API
+* Lightweight core
+
+Those features seemed pretty neat for a "distributed \<anything\>"
+project, so here you go : insert you magnet links, synchronize with
+everyone, search through the whole data at home !
 
 ## View
 
