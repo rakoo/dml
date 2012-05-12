@@ -1,12 +1,12 @@
 // Apache 2.0 J Chris Anderson 2011
 $(document).ready(function() {   
   $("#query").val('');
-    
 
-	// The db
-	var path = unescape(document.location.pathname).split('/'),
-		design = path[3],
-		db = $.couch.db(path[1]);
+
+  // The db
+  var path = unescape(document.location.pathname).split('/'),
+  design = path[3],
+  db = $.couch.db(path[1]);
 
   db.info({
     success: function(data){
@@ -17,19 +17,19 @@ $(document).ready(function() {
   });
 
 
-	// display nice human readable size
-	function bytesToSize(bytes) {
+  // display nice human readable size
+  function bytesToSize(bytes) {
     var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     var posttxt = 0;
     if (bytes == 0) return 'n/a';
-    while( bytes >= 1024 ) { 
+      while( bytes >= 1024 ) { 
         posttxt++;
         bytes = bytes / 1024;
-    }   
-    return bytes.toFixed(2) + " " + sizes[posttxt];
-	}
+      }   
+      return bytes.toFixed(2) + " " + sizes[posttxt];
+  }
 
-	//search
+  //search
   function search() {
     if ($("#query").val() == ""){return;}
     var terms = $("#query").val().toLowerCase().split(' '); // simple for the moment
@@ -39,16 +39,16 @@ $(document).ready(function() {
 
   // fetch the number of ids from the db
   function first_fetch_from_db(terms) {
-    db.view(design + "/search_index", {
+    db.list(design + "/regexp_check", "search_index_with_name", {
+      data: JSON.stringify({"q": terms}),
       keys: terms,
-      stale: "update_after",
-      reduce: true,
-      group: true,
-      success : function(data) {
+      reduce: false,
+      success: function(predata) {
+        data = JSON.parse(predata);
+        console.log(data);
 
-        var total_num = data.rows.reduce(function(accu,current){
-          return accu + current.value;
-        },0)
+        var total_num = data.length;
+
         // display the number of ids
         var them = $.mustache($("#result-header-mustache").html(), {
           num: total_num
@@ -56,8 +56,7 @@ $(document).ready(function() {
         $("#result-header").html(them);
 
         // pagination will start at the beginning of the results
-        var page_index = new Array;
-        display_page(1, page_index, Math.floor(total_num/10),terms);
+        display_page(1, [], Math.floor(total_num/10),terms);
       }
     });
   };
@@ -75,24 +74,24 @@ $(document).ready(function() {
     // safely remove it, instead of checking it entirely
     if (page === 1){page_index[1] = ""};
 
-    db.view(design + "/search_index", {
+
+    db.list(design + "/regexp_check", "search_index_with_name", {
+      data: JSON.stringify({"q": terms}),
       keys: terms,
-      stale: "update_after",
       reduce: false,
       startkey_docid: page_index[page],
-      limit: 11,
-      success : function(data) {
+      success: function(predata) {
+        data = JSON.parse(predata);
 
         var next_exists = true,
-            prev_exists = true;
+        prev_exists = true;
 
-        if (data.rows.length < 11){ // last page
+        if (data.length < 11){ // last page
           next_exists = false;
-        }else if(page_index.indexOf(data.rows[10].id) == -1){ // didn't click on "prev"
-          page_index.push(data.rows[10].id); // careful ! 11th element is at 10
+        } else if(page_index.indexOf(data[10]) == -1){ // didn't click on "prev"
+          page_index.push(data[10]); // careful ! 11th element is at 10
         }
         var prev_exists = page != 1;
-    console.log(page_index.slice(1));
 
         // display the prev/next footer
         $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
@@ -101,7 +100,7 @@ $(document).ready(function() {
           num_page: num_page,
           prev: (function(){return prev_exists == true})
         }));
- 
+
         // bind the clicks
         if (next_exists){
           $("a[href=#next]").click(function(){
@@ -115,9 +114,7 @@ $(document).ready(function() {
 
 
         // finally, display the goods
-        fetch_and_display(data.rows.slice(0,10).map(function(row){
-          return row.id
-        }), terms);
+        fetch_and_display(data.slice(0,10), terms);
 
       }
     });
