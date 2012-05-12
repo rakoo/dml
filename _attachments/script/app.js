@@ -39,26 +39,31 @@ $(document).ready(function() {
 
   // fetch the number of ids from the db
   function first_fetch_from_db(terms) {
-    db.list(design + "/regexp_check", "search_index_with_name", {
-      data: JSON.stringify({"q": terms}),
-      keys: terms,
-      reduce: false,
-      success: function(predata) {
-        data = JSON.parse(predata);
-        console.log(data);
+    db.list(design + "/regexp_check", "search_index_with_name", 
+            // couchdb's list options
+            {
+              data: JSON.stringify({"q": terms}),
+              keys: terms,
+              reduce: false
+            }, 
+            // ajaxOptions
+            {
+              success: function(data) {
+                console.log(data.length);
 
-        var total_num = data.length;
+                var total_num = data.length;
 
-        // display the number of ids
-        var them = $.mustache($("#result-header-mustache").html(), {
-          num: total_num
-        });
-        $("#result-header").html(them);
+                // display the number of ids
+                var them = $.mustache($("#result-header-mustache").html(), {
+                  num: total_num
+                });
+                $("#result-header").html(them);
 
-        // pagination will start at the beginning of the results
-        display_page(1, [], Math.floor(total_num/10),terms);
-      }
-    });
+                // pagination will start at the beginning of the results
+                display_page(1, [], Math.floor(total_num/10),terms);
+              }
+            }
+           );
   };
 
   // setup and display paginated keys for a page
@@ -75,50 +80,53 @@ $(document).ready(function() {
     if (page === 1){page_index[1] = ""};
 
 
-    db.list(design + "/regexp_check", "search_index_with_name", {
-      data: JSON.stringify({"q": terms}),
-      keys: terms,
-      reduce: false,
-      startkey_docid: page_index[page],
-      success: function(predata) {
-        data = JSON.parse(predata);
+    db.list(design + "/regexp_check", "search_index_with_name", 
+            {
+              data: JSON.stringify({"q": terms}),
+              keys: terms,
+              reduce: false,
+              limit: 11,
+              startkey_docid: page_index[page],
+            },
+            {
+              success: function(data) {
 
-        var next_exists = true,
-        prev_exists = true;
+                var next_exists = true,
+                prev_exists = true;
 
-        if (data.length < 11){ // last page
-          next_exists = false;
-        } else if(page_index.indexOf(data[10]) == -1){ // didn't click on "prev"
-          page_index.push(data[10]); // careful ! 11th element is at 10
-        }
-        var prev_exists = page != 1;
+                if (data.length < 11){ // last page
+                  next_exists = false;
+                } else if(page_index.indexOf(data[10]) == -1){ // didn't click on "prev"
+                  page_index.push(data[10]); // careful ! 11th element is at 10
+                }
+                var prev_exists = page != 1;
 
-        // display the prev/next footer
-        $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
-          next: (function(){return next_exists == true}),
-          page: page,
-          num_page: num_page,
-          prev: (function(){return prev_exists == true})
-        }));
+                // display the prev/next footer
+                $("#result-footer").html($.mustache($("#result-footer-mustache").html(),{
+                  next: (function(){return next_exists == true}),
+                  page: page,
+                  num_page: num_page,
+                  prev: (function(){return prev_exists == true})
+                }));
 
-        // bind the clicks
-        if (next_exists){
-          $("a[href=#next]").click(function(){
-            display_page(page + 1, page_index, num_page, terms);
-          });
-        }
-        if (prev_exists){
-          $("a[href=#prev]").click(function(){
-            display_page(page - 1, page_index, num_page, terms)});
-        }
+                // bind the clicks
+                if (next_exists){
+                  $("a[href=#next]").click(function(){
+                    display_page(page + 1, page_index, num_page, terms);
+                  });
+                }
+                if (prev_exists){
+                  $("a[href=#prev]").click(function(){
+                    display_page(page - 1, page_index, num_page, terms)});
+                }
 
 
-        // finally, display the goods
-        fetch_and_display(data.slice(0,10), terms);
+                // finally, display the goods
+                fetch_and_display(data.slice(0,10), terms);
 
-      }
-    });
-
+              }
+            }
+           );
   }
 
 
