@@ -84,7 +84,6 @@ $(document).ready(function() {
               data: JSON.stringify({"q": terms}),
               keys: terms,
               reduce: false,
-              limit: 11,
               startkey_docid: page_index[page],
             },
             {
