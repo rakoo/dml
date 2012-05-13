@@ -49,7 +49,6 @@ $(document).ready(function() {
             // ajaxOptions
             {
               success: function(data) {
-                console.log(data.length);
 
                 var total_num = data.length;
 
