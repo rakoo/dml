@@ -20,13 +20,58 @@ project, so here you go : insert you magnet links, synchronize with
 everyone, search through the whole data at home !
 
 ## Demo
-You can test a live demo at
-http://krakotztest.iriscouch.com/magnet_links_test/_design/dml/index.html
+You can test a live demo [here[(http://krakotztest.iriscouch.com/magnet_links_test/_design/dml/index.html)
 
 
 It doesn't contain all the links at the moment, only a little (10000)
 subset to test.
 
+## Installation
+This is a simple couchapp. You will need CouchDB and the couchapp
+script.
+
+Once you have them, the installation is very easy : 
+
+```
+  git clone git://github.com/rakoo/dml.git
+  cd dml
+  couchapp push . http://localhost:5984/magnet_links
+```
+
+And there you go : a personal magnet link index. If you want to use it
+with The Pirate Bay torrents, just replicate from [my
+couch](http://krakotztest.iriscouch.com/magnet_links_test). Add this
+document to your ```_replicator``` database : 
+
+```
+{
+  "source": "http://krakotztest.iriscouch.com/magnet_links_test",
+  "target": "magnet_links_test",
+}
+```
+
+You now have a subset of the 90M archive (I keep it at 10000 records for
+    the tests)
+
+## Importing from the archive
+You can also import the magnet links from the archive. The model for a
+magnet link is fairly easy, a script can easily be done : 
+
+```
+{
+   "_id": "7ec39f2b8a517405f62dc9205d01b657",
+   "_rev": "1-19ee5d5c458b8e0d01e5646a2f31249c",
+   "tpb_url": "http://thepiratebay.se/torrent/3244891",
+   "name": "AdwareX Eliminator 2.0",
+   "size": 1924027,
+   "hash": "5e39d0428be5fed5ca00286e6e732a4e29b07f30"
+}
+```
+
+I have purposedly not included the number of seeds and peers; these are
+highly volatile data, and I don't want to update the database frequently
+for something that does not add something of great value.
+If you want to, feel free to do so =]
 
 ## View
 
