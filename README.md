@@ -45,7 +45,10 @@ This has several disadvantages :
 * real REST ! (maybe through something like sammy.js ?)
 * proper security
 * use _changes_ goodness
-* implement a proper multiword search
+
+## CHANGELOG
+
+2012-05-13: Adding multiple word in the search bar now does a AND
 
 ## UNLICENSE
 This project is placed in the public domain.
