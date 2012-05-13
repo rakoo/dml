@@ -76,7 +76,7 @@ If you want to, feel free to do so =]
 ## View
 
 As the whole thing has to be included in couchdb, the only view used
-(search_index) is really dumb : it indexes every name in the data,
+(```search_index_with_name```) is really dumb : it indexes every name in the data,
 	splits the words, and adds each of them as an entry in the index.
 
 This has several disadvantages :
@@ -89,7 +89,7 @@ This has several disadvantages :
 * add a magnet link adding/editing option
 * real REST ! (maybe through something like sammy.js ?)
 * proper security
-* use _changes_ goodness
+* use ```_changes``` goodness
 
 ## CHANGELOG
 
